@@ -11,10 +11,9 @@ function chooseBreed() {
         loaderEl.classList.replace('loader', 'is-hidden')
 
         let optionsMarkUp = data.map(({id, name}) => {
-            return `<option value=${id}>${name}<option>`;
-                
+            return `<option value="${id}">${name}</option>`;
         });
-        breedSelectEl.insertAdjacentHTML('beforeend', optionsMarkUp);
+        breedSelectEl.insertAdjacentHTML('beforeend', optionsMarkUp.join(''));
         breedSelectEl.classList.remove('is-hidden');
     });
 }
@@ -31,18 +30,17 @@ breedSelectEl.addEventListener('change', (e) => {
 
     fetchCatByBreeds(breedId).then(data => {
         const { url, breeds } = data[0];
-        return;
-        const { name, description, temperament } = breeds[0]
+        const { name, description, temperament } = breeds[0];
         catInfoEl.innerHTML = `
-            <img src=${url} alt=${name} width="400"/>
+            <img src="${url}" alt="${name}" width="400"/>
             <div>
                 <h2>${name}</h2>
                 <p>${description}</p>
-                <p>${temperament}</p>
+                <p><strong>Temperament:</strong> ${temperament}</p>
             </div>
         `;
-
-        catInfoEl.classList.remove('is-hidden')
+        catInfoEl.classList.remove('is-hidden');
         loaderEl.classList.add('is-hidden');
-    });
+        errorEl.classList.add('is-hidden');
+    })
 });
