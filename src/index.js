@@ -7,6 +7,7 @@ const errorEl = document.querySelector('.error');
 
 //Dropdown List
 function chooseBreed() {
+    errorEl.classList.add('is-hidden');
     fetchBreeds().then(data => {
         loaderEl.classList.replace('loader', 'is-hidden')
 
