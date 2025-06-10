@@ -15,19 +15,18 @@ function chooseBreed() {
         });
         breedSelectEl.insertAdjacentHTML('beforeend', optionsMarkUp.join(''));
         breedSelectEl.classList.remove('is-hidden');
+
+        if (data.length > 0) {
+            const firstBreedId = data[0].id;
+            breedSelectEl.value = firstBreedId;
+            showCatByBreed(firstBreedId);
+        }
     });
 }
 
-chooseBreed();
-
-breedSelectEl.addEventListener('change', (e) => {
-    
+function showCatByBreed(breedId) {
     loaderEl.classList.replace('is-hidden', 'loader');
-
     catInfoEl.classList.add('is-hidden');
-
-    let breedId = e.target.value;
-
     fetchCatByBreeds(breedId).then(data => {
         const { url, breeds } = data[0];
         const { name, description, temperament } = breeds[0];
@@ -42,5 +41,11 @@ breedSelectEl.addEventListener('change', (e) => {
         catInfoEl.classList.remove('is-hidden');
         loaderEl.classList.add('is-hidden');
         errorEl.classList.add('is-hidden');
-    })
+    });
+}
+
+chooseBreed();
+
+breedSelectEl.addEventListener('change', (e) => {
+    showCatByBreed(e.target.value);
 });
